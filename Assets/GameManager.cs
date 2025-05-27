@@ -8,6 +8,6 @@ public class GameManager : MonoBehaviour {
   public GameObject GetPlayer() => player;
 
   private void Awake() {
-    if (Instance == null) Instance = this; else Destroy(this);
+    if (!Instance) Instance = this; else Destroy(this);
   }
 }

@@ -119,6 +119,32 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &41425601 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 07d49973a0abeaa9a944c0763b090f3e, type: 3}
+  m_PrefabInstance: {fileID: 1540000751}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &41425605
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41425601}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5.0060554, y: 5.0064883, z: 0.39935815}
+  m_Center: {x: -0.0030306575, y: 2.4952726, z: -0.19736314}
 --- !u!1 &42268859 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6703772919161409774, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
@@ -2672,7 +2698,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 07d49973a0abeaa9a944c0763b090f3e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 41425605}
   m_SourcePrefab: {fileID: 100100000, guid: 07d49973a0abeaa9a944c0763b090f3e, type: 3}
 --- !u!1001 &1555290838
 PrefabInstance:
@@ -3326,13 +3355,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2077955562}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.3975109, w: 0.91759753}
-  m_LocalPosition: {x: -19.199991, y: 14.810001, z: 18.599987}
-  m_LocalScale: {x: 18.540901, y: 2.0601, z: 32.9616}
-  m_ConstrainProportionsScale: 1
+  m_LocalRotation: {x: -0.271265, y: -0.6530048, z: -0.271265, w: 0.6530048}
+  m_LocalPosition: {x: -19.5, y: 15.57, z: 18.35}
+  m_LocalScale: {x: 31.34098, y: 17.52964, z: -0.72950613}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1868045349}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 46.845}
+  m_LocalEulerAnglesHint: {x: -45.117, y: -90, z: 0}
 --- !u!114 &2077955564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3353,7 +3382,7 @@ MonoBehaviour:
   childWindowZDistance: 0.02
   partialWindowTitle_: Firefox
   desktopIndex_: 0
-  captureMode: 1
+  captureMode: 3
   capturePriority: -1
   captureRequestTiming: 1
   captureFrameRate: 30
@@ -3361,7 +3390,7 @@ MonoBehaviour:
   updateTitle: 1
   searchAnotherWindowWhenInvalid: 0
   scaleControlType: 0
-  scalePer1000Pixel: 1
+  scalePer1000Pixel: 20
   updateScaleForcely: 0
 --- !u!65 &2077955565
 BoxCollider:
@@ -3624,6 +3653,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Cell
       objectReference: {fileID: 0}
+    - target: {fileID: 249304839266364058, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 264014203275300273, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_Name
       value: Cell
@@ -3632,6 +3665,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Cell
       objectReference: {fileID: 0}
+    - target: {fileID: 317998678845280814, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 626214725091278044, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 24
+      objectReference: {fileID: 0}
     - target: {fileID: 643697212263804824, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_Name
       value: Cell
@@ -3639,6 +3680,14 @@ PrefabInstance:
     - target: {fileID: 643697212263804824, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_TagString
       value: Cell
+      objectReference: {fileID: 0}
+    - target: {fileID: 696996403956441332, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 720829316702245951, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 745698647765933301, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_Name
@@ -3663,11 +3712,23 @@ PrefabInstance:
     - target: {fileID: 835663064933674725, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_TagString
       value: Cell
+      objectReference: {fileID: 0}
+    - target: {fileID: 1666064795205640550, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1696699574517875208, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 2466349652221521367, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_Name
       value: chunitouch
       objectReference: {fileID: 0}
+    - target: {fileID: 2625812838546731709, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 2663286760234072323, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_Name
       value: Cell
@@ -3691,6 +3752,10 @@ PrefabInstance:
     - target: {fileID: 2852947502788737227, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_TagString
       value: Cell
+      objectReference: {fileID: 0}
+    - target: {fileID: 2936575918917870437, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2986426815173769069, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_LocalScale.x
@@ -3796,6 +3861,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Cell
       objectReference: {fileID: 0}
+    - target: {fileID: 3616001348354269864, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3796467842462865348, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_Name
       value: Cell
@@ -3803,6 +3872,26 @@ PrefabInstance:
     - target: {fileID: 3796467842462865348, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_TagString
       value: Cell
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799559455095788996, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 4244802724052716324, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 4281376651046750407, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302346514620229407, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582828093529045631, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5101107813769883913, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_Name
@@ -3820,6 +3909,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Cell
       objectReference: {fileID: 0}
+    - target: {fileID: 5154379524596096460, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 5216100169874725004, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 32
+      objectReference: {fileID: 0}
     - target: {fileID: 5434827063971414710, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_Name
       value: Cell
@@ -3836,6 +3933,18 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Cell
       objectReference: {fileID: 0}
+    - target: {fileID: 5865922889755316919, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928186841181838095, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 5996898332305793610, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6034750220307469738, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_Name
       value: Cell
@@ -3843,6 +3952,10 @@ PrefabInstance:
     - target: {fileID: 6034750220307469738, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_TagString
       value: Cell
+      objectReference: {fileID: 0}
+    - target: {fileID: 6224459077354240615, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 6619795702692722410, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_Name
@@ -3868,6 +3981,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Cell
       objectReference: {fileID: 0}
+    - target: {fileID: 6843547924520011790, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 6864069222175314767, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 19
+      objectReference: {fileID: 0}
     - target: {fileID: 6944310372232313592, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_Name
       value: Cell
@@ -3892,6 +4013,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Cell
       objectReference: {fileID: 0}
+    - target: {fileID: 7755932624540582771, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7790351049677094686, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 7863762841889969871, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_Name
       value: Cell
@@ -3899,6 +4028,14 @@ PrefabInstance:
     - target: {fileID: 7863762841889969871, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_TagString
       value: Cell
+      objectReference: {fileID: 0}
+    - target: {fileID: 7890498311299248967, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7934641042671015971, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 8039173084464622900, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_Name
@@ -3916,6 +4053,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Cell
       objectReference: {fileID: 0}
+    - target: {fileID: 8165259626911917541, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8180493688431346518, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 31
+      objectReference: {fileID: 0}
     - target: {fileID: 8341455406136465048, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_Name
       value: Cell
@@ -3923,6 +4068,18 @@ PrefabInstance:
     - target: {fileID: 8341455406136465048, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_TagString
       value: Cell
+      objectReference: {fileID: 0}
+    - target: {fileID: 8488594284724997129, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8551025309574462725, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 9047245936488381632, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
+      propertyPath: btn
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 9158623185420816240, guid: e52ab4bdbf2b3c025806a45527a3b821, type: 3}
       propertyPath: m_Name
