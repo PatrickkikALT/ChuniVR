@@ -16,14 +16,18 @@ public class TouchCell : MonoBehaviour {
   }
 
   private void OnCollisionExit(Collision other) {
-    if (other.transform.root.gameObject == player) {
-      GetComponent<Renderer>().material.color = Color.white;
-    }
-    
+    if (other.gameObject.CompareTag("Cell")) return;
+    Debug.Log("Collision left");
+    GetComponent<Renderer>().material.color = Color.white;
+    ReleaseButton();
   }
 
   [ContextMenu("Test")]
   public void SendBtn() {
-    ChuniIO.SendBtnToIO(btn);
+    ChuniIO.Instance.SendButtonToIO(btn);
+  }
+
+  public void ReleaseButton() {
+    ChuniIO.Instance.ReleaseButtonFromIO(btn);
   }
 }
