@@ -43,7 +43,6 @@ public class ChuniIO : MonoBehaviour {
     mmf?.Dispose();
   }
   
-
   private void SendLoop() {
     byte[] buffer = new byte[34];
     while (running) {
@@ -58,11 +57,11 @@ public class ChuniIO : MonoBehaviour {
 
   public void SendButtonToIO(int btn) {
     sliders[btn - 1] = 128;
-    Debug.Log($"Set Input for cell {btn} to pressed.");
+    // Debug.Log($"Set Input for cell {btn} to pressed.");
   }
 
   public void ReleaseButtonFromIO(int btn) {
     sliders[btn - 1] = 0;
-    Debug.Log($"Released input for cell {btn}");
+    // Debug.Log($"Released input for cell {btn}");
   }
 }

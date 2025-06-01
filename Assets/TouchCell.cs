@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Inputs.Haptics;
+
 
 public class TouchCell : MonoBehaviour {
   [SerializeField] private int btn;
@@ -9,17 +11,29 @@ public class TouchCell : MonoBehaviour {
     player = GameManager.Instance.GetPlayer();
   }
   private void OnCollisionEnter(Collision other) {
-    if (other.gameObject.CompareTag("Cell")) return;
+    if (other.gameObject.layer != 6) return;
+    if (other.transform.parent.parent.TryGetComponent(out HapticImpulsePlayer haptic)) 
+      SendHaptic(haptic);
     GetComponent<Renderer>().material.color = Color.red;
     SendBtn();
   }
 
+  private void OnCollisionStay(Collision other) {
+    if (other.gameObject.layer != 6) return; 
+    if (other.transform.parent.parent.TryGetComponent(out HapticImpulsePlayer haptic)) 
+      SendHaptic(haptic);
+  }
+
   private void OnCollisionExit(Collision other) {
-    if (other.gameObject.CompareTag("Cell")) return;
+    if (other.gameObject.layer != 6) return;
     GetComponent<Renderer>().material.color = Color.white;
+
     ReleaseButton();
   }
 
+  private bool SendHaptic(HapticImpulsePlayer haptic) 
+    => haptic.SendHapticImpulse(1, 0.1f);
+  
   [ContextMenu("Test")]
   public void SendBtn() {
     ChuniIO.Instance.SendButtonToIO(btn);
