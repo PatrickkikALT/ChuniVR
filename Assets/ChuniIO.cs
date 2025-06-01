@@ -13,25 +13,30 @@ public class ChuniIO : MonoBehaviour {
   private MemoryMappedViewAccessor accessor;
   private byte[] dataBuffer = new byte[SHM_SIZE];
   private byte opbtn = 0;
-  private byte beams = 0;
+  public byte beams = 0;
   private byte[] sliders = new byte[32];
-  private bool running = true;
+  public bool running = true;
 
-  void Start() {
+
+  void Awake() {
     if (Instance == null) Instance = this;
     else Destroy(this);
+  }
+  void Start() {
     try {
       mmf = MemoryMappedFile.CreateOrOpen("ChuniIOSharedMemory", 34, MemoryMappedFileAccess.ReadWrite);
       accessor = mmf.CreateViewAccessor(0, 34, MemoryMappedFileAccess.Write);
       Debug.Log("ChuniIOWriter: Shared memory opened.");
-      Thread newThread = new Thread(SendLoop);
-      newThread.IsBackground = true;
+      Thread newThread = new Thread(SendLoop) {
+        IsBackground = true
+      };
       newThread.Start();
     }
     catch (Exception ex) {
       Debug.LogError("ChuniIOWriter: Failed to open shared memory: " + ex.Message);
     }
   }
+  
 
   void OnDestroy() {
     running = false;
@@ -47,8 +52,8 @@ public class ChuniIO : MonoBehaviour {
       buffer[1] = beams;
       Array.Copy(sliders, 0, buffer, 2, 32);
       accessor.WriteArray(0, buffer, 0, SHM_SIZE);
-      print($"Sent array {buffer} to IO");
-      Thread.Sleep(0);
+      // print($"Sent array {buffer} to IO");
+      Thread.Sleep(1);
     }
   }
 
