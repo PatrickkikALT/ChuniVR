@@ -2,8 +2,8 @@
 A VR emulator for Chunithm.
 
 ## Known issues
-No haptic feedback (wip)
-Game screen turns white after 1 credit
+No haptic feedback (wip) <br>
+Game screen turns white after 1 credit <br>
 Sometimes game screen just turns white for no reason
 
 ## Copyright 
