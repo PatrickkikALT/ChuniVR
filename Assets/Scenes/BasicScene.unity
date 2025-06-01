@@ -3380,7 +3380,7 @@ MonoBehaviour:
   createChildWindows_: 1
   childWindowPrefab: {fileID: 0}
   childWindowZDistance: 0.02
-  partialWindowTitle_: Firefox
+  partialWindowTitle_: teaGfx
   desktopIndex_: 0
   captureMode: 3
   capturePriority: -1
