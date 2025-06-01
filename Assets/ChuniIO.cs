@@ -6,12 +6,11 @@ using UnityEngine;
 public class ChuniIO : MonoBehaviour {
 
   public static ChuniIO Instance;
-  private const string SHM_NAME = "ChuniIISharedMemory";
+  private const string SHM_NAME = "ChuniIOSharedMemory";
   private const int SHM_SIZE = 34;
-
+  
   private MemoryMappedFile mmf;
   private MemoryMappedViewAccessor accessor;
-  private byte[] dataBuffer = new byte[SHM_SIZE];
   private byte opbtn = 0;
   public byte beams = 0;
   private byte[] sliders = new byte[32];
@@ -24,8 +23,8 @@ public class ChuniIO : MonoBehaviour {
   }
   void Start() {
     try {
-      mmf = MemoryMappedFile.CreateOrOpen("ChuniIOSharedMemory", 34, MemoryMappedFileAccess.ReadWrite);
-      accessor = mmf.CreateViewAccessor(0, 34, MemoryMappedFileAccess.Write);
+      mmf = MemoryMappedFile.CreateOrOpen(SHM_NAME, SHM_SIZE, MemoryMappedFileAccess.ReadWrite);
+      accessor = mmf.CreateViewAccessor(0, SHM_SIZE, MemoryMappedFileAccess.Write);
       Debug.Log("ChuniIOWriter: Shared memory opened.");
       Thread newThread = new Thread(SendLoop) {
         IsBackground = true
