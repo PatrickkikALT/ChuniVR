@@ -4,7 +4,7 @@ using UnityEngine.XR.Interaction.Toolkit.Inputs.Haptics;
 
 
 public class TouchCell : MonoBehaviour {
-  [SerializeField] private int btn;
+  public int btn;
   public GameObject player;
 
   void Start() {
@@ -32,7 +32,7 @@ public class TouchCell : MonoBehaviour {
   }
 
   private bool SendHaptic(HapticImpulsePlayer haptic) 
-    => haptic.SendHapticImpulse(1, 0.1f);
+    => haptic.SendHapticImpulse(0.6f, 0.1f);
   
   [ContextMenu("Test")]
   public void SendBtn() {

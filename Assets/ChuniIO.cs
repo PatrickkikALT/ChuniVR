@@ -11,7 +11,7 @@ public class ChuniIO : MonoBehaviour {
   
   private MemoryMappedFile mmf;
   private MemoryMappedViewAccessor accessor;
-  private byte opbtn = 0;
+  public byte opbtn = 0;
   public byte beams = 0;
   private byte[] sliders = new byte[32];
   public bool running = true;

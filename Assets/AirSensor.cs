@@ -26,7 +26,7 @@ public class AirSensor : MonoBehaviour {
       Vector3 direction = beamDirections[i];
       float distance = irSensors[i].distance;
 
-      bool isBroken = Physics.Raycast(origin, direction, distance);
+      bool isBroken = Physics.Raycast(origin, direction, distance, ~0, QueryTriggerInteraction.Collide);
       if (isBroken) {
         localState |= (1 << i);
       }
