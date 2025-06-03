@@ -14,7 +14,6 @@ public class TouchCell : MonoBehaviour {
     if (other.gameObject.layer != 6) return;
     if (other.transform.parent.parent.TryGetComponent(out HapticImpulsePlayer haptic)) 
       SendHaptic(haptic);
-    GetComponent<Renderer>().material.color = Color.red;
     SendBtn();
   }
 
@@ -26,7 +25,6 @@ public class TouchCell : MonoBehaviour {
 
   private void OnCollisionExit(Collision other) {
     if (other.gameObject.layer != 6) return;
-    GetComponent<Renderer>().material.color = Color.white;
 
     ReleaseButton();
   }

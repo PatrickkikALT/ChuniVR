@@ -10,9 +10,9 @@ public class LEDManager : MonoBehaviour {
   private NamedPipeClientStream pipeClient;
   private Thread readThread;
   private bool keepReading = false;
-  private List<GameObject> sortedChildren;
+  public List<GameObject> sortedChildren = new();
   private List<byte> receivedData = new();
-  private List<Renderer> cachedRenderers = new();
+  public List<Renderer> cachedRenderers = new();
   private readonly ConcurrentQueue<byte[]> packetQueue = new();
 
   void Start() {
@@ -31,24 +31,40 @@ public class LEDManager : MonoBehaviour {
       var rend = go.GetComponent<Renderer>();
       cachedRenderers.Add(rend);
     }
-
   }
 
-  void ConnectToPipe() {
-    try {
-      pipeClient = new NamedPipeClientStream(".", "chuni_led", PipeDirection.In);
-      pipeClient.Connect(5000);
-      Debug.Log("Connected to LED pipe");
+  void OnApplicationPause(bool pauseStatus) {
+    if (pauseStatus) {
+        keepReading = false;
+        readThread?.Join();
+        pipeClient?.Dispose();
+    } else {
+        ConnectToPipe();
+    }
+}
 
-      keepReading = true;
-      readThread = new Thread(ReadFromPipe);
-      readThread.IsBackground = true;
-      readThread.Start();
+void ConnectToPipe() {
+    try {
+        if (pipeClient != null && pipeClient.IsConnected) {
+            pipeClient.Dispose();
+        }
+        
+        pipeClient = new NamedPipeClientStream(".", "chuni_led", PipeDirection.In);
+        pipeClient.Connect(5000);
+        Debug.Log("Connected to LED pipe");
+
+        receivedData.Clear();
+        packetQueue.Clear();
+        
+        keepReading = true;
+        readThread = new Thread(ReadFromPipe);
+        readThread.IsBackground = true;
+        readThread.Start();
     }
     catch (Exception e) {
-      Debug.LogError("Failed to connect to pipe: " + e.Message);
+        Debug.LogError("Failed to connect to pipe: " + e.Message);
     }
-  }
+}
 
   void ReadFromPipe() {
     try {
@@ -62,18 +78,16 @@ public class LEDManager : MonoBehaviour {
             byte b = rawBuffer[i];
 
             if (escapeNext) {
-              b = (byte)(b + 1);
+              receivedData.Add((byte)(b + 1));
               escapeNext = false;
-            }
-            else if (b == 0xD0) {
+            } else if (b == 0xD0) {
               escapeNext = true;
-              continue;
+            } else {
+              receivedData.Add(b);
             }
-
-            receivedData.Add(b);
-
-            TryParsePackets();
           }
+          TryParsePackets();
+
         }
         else {
           Thread.Sleep(10);
@@ -91,7 +105,7 @@ public class LEDManager : MonoBehaviour {
     while (true) {
       int startIndex = receivedData.IndexOf(0xE0);
       if (startIndex == -1) {
-        if (receivedData.Count > 1000) receivedData.Clear();
+        if (receivedData.Count > 5000) receivedData.Clear();
         return;
       }
 
@@ -104,7 +118,7 @@ public class LEDManager : MonoBehaviour {
       byte boardNum = candidate[1];
       if (boardNum == 2) {
         packetQueue.Enqueue(candidate);
-        receivedData.RemoveRange(0, startIndex + packetLength);
+        receivedData.RemoveRange(startIndex, packetLength);
       }
       else {
         receivedData.RemoveRange(0, startIndex + 1);
@@ -120,19 +134,56 @@ public class LEDManager : MonoBehaviour {
 
   void ProcessSliderPacket(byte[] packet) {
     const int ledCount = 31;
+    
+    if (packet.Length < 2 + (ledCount * 3)) {
+        Debug.LogWarning("Invalid packet length received");
+        return;
+    }
+    
+    if (packet[0] != 0xE0) {
+        Debug.LogWarning("Invalid packet header");
+        return;
+    }
 
     for (int i = 0; i < ledCount; i++) {
-      int baseIndex = 2 + i * 3;
-      byte b = packet[baseIndex];
-      byte r = packet[baseIndex + 1];
-      byte g = packet[baseIndex + 2];
+        int baseIndex = 2 + i * 3;
+        byte b = packet[baseIndex];
+        byte r = packet[baseIndex + 1];
+        byte g = packet[baseIndex + 2];
+        
+        if (r > 255 || g > 255 || b > 255) {
+            Debug.LogWarning($"Invalid color values at LED {i}: R:{r} G:{g} B:{b}");
+            continue;
+        }
 
-      Color col = new Color(r / 255f, g / 255f, b / 255f);
-      SetLed(i, col);
+        Color col = new Color(r / 255f, g / 255f, b / 255f);
+        SetLed(i, col);
     }
-  }
+    SetLed(31, cachedRenderers[30].material.color);
+}
 
   void SetLed(int btn, Color color) {
+    if (btn < 0 || btn >= cachedRenderers.Count) {
+        Debug.LogWarning($"Invalid LED index: {btn}");
+        return;
+    }
+    
+    if (color == Color.black) {
+        Color neighborColor = Color.black;
+        
+        if (btn > 0 && cachedRenderers[btn - 1].material.color != Color.black) {
+            neighborColor = cachedRenderers[btn - 1].material.color;
+        }
+
+        else if (btn < cachedRenderers.Count - 1 && cachedRenderers[btn + 1].material.color != Color.black) {
+            neighborColor = cachedRenderers[btn + 1].material.color;
+        }
+        
+        if (neighborColor != Color.black) {
+            color = neighborColor;
+        }
+    }
+
     cachedRenderers[btn].material.color = color;
   }
 
