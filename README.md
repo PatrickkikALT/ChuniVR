@@ -3,13 +3,13 @@ A VR emulator for Chunithm.
 
 ## Usage
 - Get clean Chunithm data (I will NEVER provide any data whatsoever) and set it up with segatools <br>
-- Download the chuniio dll from releases and put it in your game folder <br>
+- Download the io dlls from releases and put them in your game folder <br>
+- Put them in their respective segatools options
 - Open Chunithm and wait until the console says that Shared Memory has been opened <br>
 - Open the Unity game <br>
 - play game
 
 ## Known issues
-Game screen turns white after 1 credit <br>
 Sometimes game screen just turns white for no reason
 
 ## Copyright 
