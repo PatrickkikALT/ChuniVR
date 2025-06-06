@@ -1,11 +1,10 @@
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class EAmusementCard : MonoBehaviour {
-  public uint id;
-
-  public EAmusementCard(uint id) {
+  public string id;
+  
+  public EAmusementCard(string id) {
     this.id = id;
   }
-  
-  
 }
