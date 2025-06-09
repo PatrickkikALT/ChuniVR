@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO.Pipes;
 using System.Threading;
 using System.Threading.Tasks;
+using NUnit.Framework;
 using UnityEngine;
 
 public class LEDManager : MonoBehaviour {
@@ -14,8 +15,10 @@ public class LEDManager : MonoBehaviour {
   private List<byte> receivedData = new();
   public List<Renderer> cachedRenderers = new();
   private readonly ConcurrentQueue<byte[]> packetQueue = new();
+  private LEDParser parser;
 
   void Start() {
+    parser = new LEDParser();
     ConnectToPipe();
     foreach (Transform t in transform) {
       sortedChildren.Add(t.gameObject);
@@ -68,7 +71,7 @@ void ConnectToPipe() {
 
   void ReadFromPipe() {
     try {
-      var rawBuffer = new byte[1024];
+      var rawBuffer = new byte[2048];
       bool escapeNext = false;
 
       while (keepReading && pipeClient.IsConnected) {
@@ -77,17 +80,17 @@ void ConnectToPipe() {
           for (int i = 0; i < bytesRead; i++) {
             byte b = rawBuffer[i];
 
-            if (escapeNext) {
-              receivedData.Add((byte)(b + 1));
-              escapeNext = false;
-            } else if (b == 0xD0) {
-              escapeNext = true;
-            } else {
-              receivedData.Add(b);
+            lock (receivedData) {
+              if (escapeNext) {
+                receivedData.Add((byte)(b + 1));
+                escapeNext = false;
+              } else if (b == 0xD0) {
+                escapeNext = true;
+              } else {
+                receivedData.Add(b);
+              }
             }
           }
-          TryParsePackets();
-
         }
         else {
           Thread.Sleep(1);
@@ -99,72 +102,25 @@ void ConnectToPipe() {
     }
   }
 
-  void TryParsePackets() {
-    int packetLength = 1 + 1 + (31 * 3);
-
-    while (true) {
-      int startIndex = receivedData.IndexOf(0xE0);
-      if (startIndex == -1) {
-        if (receivedData.Count > 5000) receivedData.Clear();
-        return;
-      }
-
-      if (receivedData.Count - startIndex < packetLength) {
-        return;
-      }
-
-      var candidate = receivedData.GetRange(startIndex, packetLength).ToArray();
-
-      byte boardNum = candidate[1];
-      if (boardNum == 2) {
-        packetQueue.Enqueue(candidate);
-        receivedData.RemoveRange(startIndex, packetLength);
-      }
-      else {
-        receivedData.RemoveRange(0, startIndex + 1);
-      }
+  private void Update() {
+    if (receivedData.Count == 0) return;
+    List<LEDParser.LedColor> leds;
+    lock (receivedData) {
+       leds = parser.ParseBoard2(receivedData.ToArray());
+       receivedData.Clear();
     }
+    if (leds.Count == 0) return;
+    for (int i = 0; i < leds.Count; i++) {
+      var led = leds[i];
+      SetLed(i, led);
+    }
+    SetLed(31, leds[^1]);
   }
 
-  void Update() {
-    while (packetQueue.TryDequeue(out byte[] packet)) {
-      ProcessSliderPacket(packet);
-    }
-  }
 
-  void ProcessSliderPacket(byte[] packet) {
-    const int ledCount = 31;
-    
-    if (packet.Length < 2 + (ledCount * 3)) {
-        Debug.LogWarning("Invalid packet length received");
-        return;
-    }
-    
-    if (packet[0] != 0xE0) {
-        Debug.LogWarning("Invalid packet header");
-        return;
-    }
-
-    for (int i = 0; i < ledCount; i++) {
-        int baseIndex = 2 + i * 3;
-        byte b = packet[baseIndex];
-        byte r = packet[baseIndex + 1];
-        byte g = packet[baseIndex + 2];
-        
-        if (r > 255 || g > 255 || b > 255) {
-            Debug.LogWarning($"Invalid color values at LED {i}: R:{r} G:{g} B:{b}");
-            continue;
-        }
-
-        Color col = new Color(r / 255f, g / 255f, b / 255f);
-        SetLed(i, col);
-    }
-    SetLed(31, cachedRenderers[30].material.color);
-}
-
-  void SetLed(int btn, Color color) {
+  void SetLed(int btn, LEDParser.LedColor ledColor) {
+    var color = new Color(ledColor.Red, ledColor.Green, ledColor.Blue);
     if (btn < 0 || btn >= cachedRenderers.Count) {
-        Debug.LogWarning($"Invalid LED index: {btn}");
         return;
     }
     

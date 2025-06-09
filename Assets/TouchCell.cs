@@ -5,11 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit.Inputs.Haptics;
 
 public class TouchCell : MonoBehaviour {
   public int btn;
-  public GameObject player;
-
-  void Start() {
-    player = GameManager.Instance.GetPlayer();
-  }
+  
   private void OnCollisionEnter(Collision other) {
     if (other.gameObject.layer != 6) return;
     if (other.transform.parent.parent.TryGetComponent(out HapticImpulsePlayer haptic)) 

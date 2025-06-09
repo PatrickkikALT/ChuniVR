@@ -50,9 +50,20 @@ public class ChuniIO : MonoBehaviour {
       buffer[1] = beams;
       Array.Copy(sliders, 0, buffer, 2, 32);
       accessor.WriteArray(0, buffer, 0, SHM_SIZE);
+      opbtn = 0;
       // print($"Sent array {buffer} to IO");
       Thread.Sleep(1);
     }
+  }
+
+  //bit 0 for opbtn is test key, bit 1 is the service key.
+  public void ServiceKey() {
+    opbtn = 1 << 1;
+    print(opbtn);
+  }
+
+  public void TestKey() {
+    opbtn = 1 << 0;
   }
 
   public void SendButtonToIO(int btn) {
