@@ -4,55 +4,71 @@ using UnityEngine;
 
 public class LEDParser {
 
-  private const byte SYNC = 0xE0;
-  private const byte ESCAPE = 0xD0;
+  private const byte Sync = 0xE0;
+  private const byte Escape = 0xD0;
 
-  public struct LedColor
-  {
+  public struct LedColor {
     public byte Blue;
     public byte Red;
     public byte Green;
 
-    public LedColor(byte b, byte r, byte g)
-    {
+    public LedColor(byte b, byte r, byte g) {
       Blue = b;
       Red = r;
       Green = g;
     }
   }
 
-  public List<LedColor> ParseBoard2(byte[] rawData)
-  {
+  public List<LedColor> ParseBoard(byte[] rawData) {
     List<LedColor> ledColors = new List<LedColor>();
-
-    for (int i = 0; i < rawData.Length; i++)
-    {
-      if (rawData[i] == SYNC && i + 1 < rawData.Length)
-      {
+    
+    for (int i = 0; i < rawData.Length; i++) {
+      if (rawData[i] == Sync && i + 1 < rawData.Length) {
         int ptr = i + 1;
-
         byte boardId = ReadByteWithEscape(rawData, ref ptr);
-        if (boardId != 2) continue;
-
-        ledColors.Clear(); // only interested in board 2 packet for now
-
-        for (int led = 0; led < 31; led++)
-        {
-          if (ptr + 2 >= rawData.Length) break;
-
-          byte b = ReadByteWithEscape(rawData, ref ptr);
-          byte r = ReadByteWithEscape(rawData, ref ptr);
-          byte g = ReadByteWithEscape(rawData, ref ptr);
-
+        if (boardId != 2) continue; 
+        List<byte> payload = UnescapePayload(rawData, ref ptr);
+        
+        ledColors.Clear();
+        for (int j = 0; j + 2 < payload.Count; j += 3) {
+          byte b = payload[j];
+          byte r = payload[j + 1];
+          byte g = payload[j + 2];
+          if (r == 0 && b == 0 && g == 0 && ledColors.Count != 0) { //for some reason I receive tons of black LEDs through the LED pipes
+            ledColors.Add(ledColors[^1]);                           //causing black LEDs in the bottom left corner of every color zone
+            continue;                                               //this way its remotely decent
+          }
           ledColors.Add(new LedColor(b, r, g));
         }
 
-        i = ptr - 1;
+        i = ptr - 1; // move i forward past what we consumed
       }
     }
 
+
     return ledColors;
   }
+
+
+  private List<byte> UnescapePayload(byte[] data, ref int ptr) {
+    List<byte> result = new List<byte>();
+
+    while (ptr < data.Length && data[ptr] != Sync) {
+      byte b = data[ptr++];
+
+      if (b == Escape) {
+        if (ptr >= data.Length) break;
+        result.Add((byte)(data[ptr++] + 1));
+      }
+      else {
+        result.Add(b);
+      }
+    }
+
+    return result;
+  }
+
+
 
   private byte ReadByteWithEscape(byte[] data, ref int index)
   {
@@ -60,8 +76,7 @@ public class LEDParser {
 
     byte value = data[index++];
 
-    if (value == ESCAPE)
-    {
+    if (value == Escape) {
       if (index >= data.Length) return 0;
       return (byte)(data[index++] + 1);
     }

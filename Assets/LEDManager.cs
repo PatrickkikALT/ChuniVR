@@ -106,7 +106,7 @@ void ConnectToPipe() {
     if (receivedData.Count == 0) return;
     List<LEDParser.LedColor> leds;
     lock (receivedData) {
-       leds = parser.ParseBoard2(receivedData.ToArray());
+       leds = parser.ParseBoard(receivedData.ToArray());
        receivedData.Clear();
     }
     if (leds.Count == 0) return;
@@ -123,23 +123,6 @@ void ConnectToPipe() {
     if (btn < 0 || btn >= cachedRenderers.Count) {
         return;
     }
-    
-    if (color == Color.black) {
-        Color neighborColor = Color.black;
-        
-        if (btn > 0 && cachedRenderers[btn - 1].material.color != Color.black) {
-            neighborColor = cachedRenderers[btn - 1].material.color;
-        }
-
-        else if (btn < cachedRenderers.Count - 1 && cachedRenderers[btn + 1].material.color != Color.black) {
-            neighborColor = cachedRenderers[btn + 1].material.color;
-        }
-        
-        if (neighborColor != Color.black) {
-            color = neighborColor;
-        }
-    }
-
     cachedRenderers[btn].material.color = color;
   }
 

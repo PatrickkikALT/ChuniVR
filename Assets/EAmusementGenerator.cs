@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class EAmusementGenerator : MonoBehaviour
 {
@@ -19,11 +20,10 @@ public class EAmusementGenerator : MonoBehaviour
   }
   
   public static string GenerateRandomAimeID() {
-    var random = new System.Random();
     char[] digits = new char[20];
-    digits[0] = (char)('1' + random.Next(9));
+    digits[0] = (char)('1' + Random.Range(0, 9));
     for (int i = 1; i < 20; i++) {
-      digits[i] = (char)('0' + random.Next(10));
+      digits[i] = (char)('0' + Random.Range(0, 10));
     }
 
     return new string(digits);

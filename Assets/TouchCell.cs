@@ -25,7 +25,7 @@ public class TouchCell : MonoBehaviour {
     ReleaseButton();
   }
 
-  private bool SendHaptic(HapticImpulsePlayer haptic) 
+  private static bool SendHaptic(HapticImpulsePlayer haptic) 
     => haptic.SendHapticImpulse(0.6f, 0.1f);
   
   [ContextMenu("Test")]

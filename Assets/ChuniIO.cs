@@ -2,7 +2,6 @@ using System;
 using System.IO.MemoryMappedFiles;
 using System.Threading;
 using UnityEngine;
-
 public class ChuniIO : MonoBehaviour {
 
   public static ChuniIO Instance;
@@ -15,6 +14,8 @@ public class ChuniIO : MonoBehaviour {
   public byte beams = 0;
   private byte[] sliders = new byte[32];
   public bool running = true;
+  private byte SERVICE = 0x01;
+  private byte TEST = 0x02;
 
 
   void Awake() {
@@ -50,20 +51,18 @@ public class ChuniIO : MonoBehaviour {
       buffer[1] = beams;
       Array.Copy(sliders, 0, buffer, 2, 32);
       accessor.WriteArray(0, buffer, 0, SHM_SIZE);
-      opbtn = 0;
       // print($"Sent array {buffer} to IO");
+      opbtn = 0;
       Thread.Sleep(1);
     }
   }
-
-  //bit 0 for opbtn is test key, bit 1 is the service key.
+  
   public void ServiceKey() {
-    opbtn = 1 << 1;
-    print(opbtn);
+    opbtn = SERVICE;
   }
 
   public void TestKey() {
-    opbtn = 1 << 0;
+    opbtn = TEST;
   }
 
   public void SendButtonToIO(int btn) {
