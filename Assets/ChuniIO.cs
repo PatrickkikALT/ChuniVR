@@ -14,8 +14,8 @@ public class ChuniIO : MonoBehaviour {
   public byte beams = 0;
   private byte[] sliders = new byte[32];
   public bool running = true;
-  private byte SERVICE = 0x01;
-  private byte TEST = 0x02;
+  private byte SERVICE = 0x02;
+  private byte TEST = 0x01;
 
 
   void Awake() {
