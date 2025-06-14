@@ -34,10 +34,6 @@ public class LEDParser {
           byte b = payload[j];
           byte r = payload[j + 1];
           byte g = payload[j + 2];
-          if (r == 0 && b == 0 && g == 0 && ledColors.Count != 0) { //for some reason I receive tons of black LEDs through the LED pipes
-            ledColors.Add(ledColors[^1]);                           //causing black LEDs in the bottom left corner of every color zone
-            continue;                                               //this way its remotely decent
-          }
           ledColors.Add(new LedColor(b, r, g));
         }
 

@@ -104,18 +104,31 @@ void ConnectToPipe() {
 
   private void Update() {
     if (receivedData.Count == 0) return;
+
     List<LEDParser.LedColor> leds;
     lock (receivedData) {
-       leds = parser.ParseBoard(receivedData.ToArray());
-       receivedData.Clear();
+      leds = parser.ParseBoard(receivedData.ToArray());
+      receivedData.Clear();
     }
+
     if (leds.Count == 0) return;
+
+    int noteLedIndex = 0;
     for (int i = 0; i < leds.Count; i++) {
-      var led = leds[i];
-      SetLed(i, led);
+      if (i % 2 == 0 && noteLedIndex < 16) {
+        var color = leds[i];
+
+        int unityTop = noteLedIndex * 2;
+        int unityBottom = unityTop + 1;
+
+        SetLed(unityTop, color);
+        SetLed(unityBottom, color);
+
+        noteLedIndex++;
+      }
     }
-    SetLed(31, leds[^1]);
   }
+
 
 
   void SetLed(int btn, LEDParser.LedColor ledColor) {
