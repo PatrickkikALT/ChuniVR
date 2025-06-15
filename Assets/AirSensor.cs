@@ -1,13 +1,14 @@
 using System;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Threading;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 public class AirSensor : MonoBehaviour {
 
   private ChuniIO IO;
   public IRSensor[] irSensors;
-  public Vector3[] beamDirections;
   public int beamState = 0;
   public void Start() {
     IO = ChuniIO.Instance;
@@ -23,12 +24,12 @@ public class AirSensor : MonoBehaviour {
     int localState = 0;
     for (int i = 0; i < 6; i++) {
       Vector3 origin = irSensors[i].transform.position;
-      Vector3 direction = beamDirections[i];
+      Vector3 direction = -transform.forward;
       float distance = irSensors[i].distance;
 
       bool isBroken = Physics.Raycast(origin, direction, distance, ~0, QueryTriggerInteraction.Collide);
       if (isBroken) {
-        localState |= (1 << i);
+        localState |= 1 << i;
       }
     }
 

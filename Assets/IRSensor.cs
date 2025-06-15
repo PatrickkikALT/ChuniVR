@@ -14,8 +14,8 @@ public class IRSensor : MonoBehaviour {
     Vector3 end = objectB.transform.position;
 
     Vector3 direction = (end - start).normalized;
-    float distance = Vector3.Distance(start, end);
+    float dis = Vector3.Distance(start, end);
 
-    return distance;
+    return dis;
   }
 }
