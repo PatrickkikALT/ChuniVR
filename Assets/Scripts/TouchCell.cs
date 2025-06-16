@@ -8,8 +8,12 @@ public class TouchCell : MonoBehaviour {
   public int btn;
   private bool xrDeviceEnabled;
   private void Start() {
-    if (XRDeviceSimulator.instance.isActiveAndEnabled) {
-      xrDeviceEnabled = true;
+    try {
+      var checkForInstance = XRDeviceSimulator.instance;
+      xrDeviceEnabled = checkForInstance.enabled;
+    }
+    catch {
+      xrDeviceEnabled = false;
     }
   }
 
