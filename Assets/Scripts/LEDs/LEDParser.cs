@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class LEDParser {
 
+  //constants for special operator buttons
   private const byte Sync = 0xE0;
   private const byte Escape = 0xD0;
 
@@ -18,7 +17,8 @@ public class LEDParser {
       Green = g;
     }
   }
-
+  //providing this with a byte array returns a list of all the colors found in that data. 
+  //it will be up to the manager to use that to actually get the correct slider colors
   public List<LedColor> ParseBoard(byte[] rawData) {
     List<LedColor> ledColors = new List<LedColor>();
     
@@ -37,14 +37,13 @@ public class LEDParser {
           ledColors.Add(new LedColor(b, r, g));
         }
 
-        i = ptr - 1; // move i forward past what we consumed
+        i = ptr - 1; 
       }
     }
 
 
     return ledColors;
   }
-
 
   private List<byte> UnescapePayload(byte[] data, ref int ptr) {
     List<byte> result = new List<byte>();
@@ -63,9 +62,7 @@ public class LEDParser {
 
     return result;
   }
-
-
-
+  
   private byte ReadByteWithEscape(byte[] data, ref int index)
   {
     if (index >= data.Length) return 0;

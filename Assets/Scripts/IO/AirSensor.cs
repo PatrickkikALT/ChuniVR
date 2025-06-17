@@ -1,15 +1,12 @@
-using System;
-using System.Numerics;
-using System.Runtime.InteropServices;
 using System.Threading;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
 public class AirSensor : MonoBehaviour {
-
   private ChuniIO IO;
   public IRSensor[] irSensors;
   public int beamState = 0;
+
   public void Start() {
     IO = ChuniIO.Instance;
     Thread airThread = new Thread(AirLoop) {
@@ -28,11 +25,13 @@ public class AirSensor : MonoBehaviour {
       float distance = irSensors[i].distance;
 
       bool isBroken = Physics.Raycast(origin, direction, distance, ~0, QueryTriggerInteraction.Collide);
+      //if the ir sensor is broken, it flips the correct bit to 1 telling the game its broken.
       if (isBroken) {
         localState |= 1 << i;
       }
     }
 
+    //keep other threads from accessing it while we are working with it
     lock (beamLock) {
       beamState = localState;
     }
@@ -41,6 +40,7 @@ public class AirSensor : MonoBehaviour {
   private void AirLoop() {
     while (IO.running) {
       int currentState;
+      //keep other threads from accessing it while we are working with it
       lock (beamLock) {
         currentState = beamState;
       }
@@ -49,5 +49,4 @@ public class AirSensor : MonoBehaviour {
       Thread.Sleep(1);
     }
   }
-
 }

@@ -1,7 +1,5 @@
 using System;
 using System.IO.MemoryMappedFiles;
-using System.Numerics;
-using System.Threading;
 using UnityEngine;
 
 public class EAmusementReader : MonoBehaviour {
@@ -25,10 +23,13 @@ public class EAmusementReader : MonoBehaviour {
     }
   }
 
+  //convert every num in the string to their corresponding bcd format. allowing us to put 2 numbers in one byte.
+  //this is just 8421, so a 5 would be 0101.
+  //game expects this format (and 10 bytes) and otherwise doesnt read it at all.
   public static byte[] StringToBCD(string decimalString, int byteCount) {
     byte[] bcd = new byte[byteCount];
     int strLen = decimalString.Length;
-    
+
     int bcdIndex = byteCount - 1;
     int strIndex = strLen - 1;
 
@@ -40,6 +41,7 @@ public class EAmusementReader : MonoBehaviour {
         lowNibble = (byte)(decimalString[strIndex] - '0');
         strIndex--;
       }
+
       if (strIndex >= 0) {
         highNibble = (byte)(decimalString[strIndex] - '0');
         strIndex--;
@@ -48,6 +50,7 @@ public class EAmusementReader : MonoBehaviour {
       bcd[bcdIndex] = (byte)((highNibble << 4) | lowNibble);
       bcdIndex--;
     }
+
     return bcd;
   }
 
