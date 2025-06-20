@@ -154,8 +154,10 @@ public class LEDManager : MonoBehaviour {
     if (btn < 0 || btn >= cachedRenderers.Count) {
       return;
     }
-
-    cachedRenderers[btn].material.color = color;
+    var mpb = new MaterialPropertyBlock();
+    cachedRenderers[btn].GetPropertyBlock(mpb);
+    mpb.SetColor("_BaseColor", color);
+    cachedRenderers[btn].SetPropertyBlock(mpb);
   }
 
   //stop threads and disconnect pipe

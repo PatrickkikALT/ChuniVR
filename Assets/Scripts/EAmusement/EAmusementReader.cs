@@ -23,9 +23,9 @@ public class EAmusementReader : MonoBehaviour {
     }
   }
 
-  //convert every num in the string to their corresponding bcd format. allowing us to put 2 numbers in one byte.
-  //this is just 8421, so a 5 would be 0101.
-  //game expects this format (and 10 bytes) and otherwise doesnt read it at all.
+  /* convert every num in the string to their corresponding bcd format. allowing us to put 2 numbers in one byte.
+  this is just 8421, so a 5 would be 0101.
+  game expects this format (and 10 bytes) and otherwise doesnt read it at all. */
   public static byte[] StringToBCD(string decimalString, int byteCount) {
     byte[] bcd = new byte[byteCount];
     int strLen = decimalString.Length;
