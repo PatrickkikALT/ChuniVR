@@ -5,6 +5,11 @@ using System.IO.Pipes;
 using System.Threading;
 using UnityEngine;
 
+/// <summary>
+/// Manages communication with segatools built in LED pipe.
+/// Connects to the "chuni_led" pipe, reads and processes raw LED color data asynchronously,
+/// parses the data using LEDParser, and updates the colors of child GameObjects' renderers.
+/// </summary>
 public class LEDManager : MonoBehaviour {
   private NamedPipeClientStream pipeClient;
   private Thread readThread;

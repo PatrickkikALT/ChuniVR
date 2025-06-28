@@ -2,6 +2,10 @@ using System;
 using System.IO.MemoryMappedFiles;
 using UnityEngine;
 
+/// <summary>
+/// Handles writing E-Amusement card ID data to shared memory in BCD format. 
+/// Detects card presence via trigger and communicates with custom aime dll.
+/// </summary>
 public class EAmusementReader : MonoBehaviour {
   private const string SHM_NAME = "ChuniVRAime";
   private const int SHM_SIZE = 10;

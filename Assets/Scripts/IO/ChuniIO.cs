@@ -3,6 +3,11 @@ using System.IO.MemoryMappedFiles;
 using System.Threading;
 using UnityEngine;
 
+/// <summary>
+/// This script handles communication with external systems
+/// via shared memory. It sends control data such as operator buttons, 
+/// beam states, and slider inputs to a shared memory segment used by the supplied IO dll in Chunithm. 
+/// </summary>
 public class ChuniIO : MonoBehaviour {
   public static ChuniIO Instance;
   private const string SHM_NAME = "ChuniIOSharedMemory";
@@ -20,10 +25,10 @@ public class ChuniIO : MonoBehaviour {
   //128 = cell on
   private byte[] sliders = new byte[32];
   public bool running = true;
+  private byte COINS = 0x03;
   private byte SERVICE = 0x02;
   private byte TEST = 0x01;
-
-
+  
   void Awake() {
     if (Instance == null) Instance = this;
     else Destroy(this);
@@ -59,7 +64,7 @@ public class ChuniIO : MonoBehaviour {
       buffer[1] = beams;
       Array.Copy(sliders, 0, buffer, 2, 32);
       accessor.WriteArray(0, buffer, 0, SHM_SIZE);
-      //make sure to reset the operator button after sending it
+      //make sure to reset the operator button after sending it so we dont get duplicate input lol
       opbtn = 0;
       Thread.Sleep(1);
     }
@@ -71,6 +76,10 @@ public class ChuniIO : MonoBehaviour {
 
   public void TestKey() {
     opbtn = TEST;
+  }
+
+  public void CoinKey() {
+    opbtn = COINS;
   }
 
   public void SendButtonToIO(int btn) {

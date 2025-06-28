@@ -1,5 +1,11 @@
 using System.Collections.Generic;
 
+/// <summary>
+/// LEDParser handles decoding of raw byte data recieved from segatools' built in LED Pipe.
+/// Only frames from board ID 2 are currently parsed. The resulting list of LedColor structs 
+/// is used in the LEDManager to set their corresponding cells to the correct color.
+/// Dividers have not yet been implemented.
+/// </summary>
 public class LEDParser {
 
   //constants for special operator buttons

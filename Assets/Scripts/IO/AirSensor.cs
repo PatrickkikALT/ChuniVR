@@ -2,6 +2,10 @@ using System.Threading;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
+/// <summary>
+/// Detects IR beam breaks using raycasts and updates ChuniIO's beam state to then send to the dll. 
+/// Runs beam detection in Unity's Update and sends data in a background thread.
+/// </summary>
 public class AirSensor : MonoBehaviour {
   private ChuniIO IO;
   public IRSensor[] irSensors;

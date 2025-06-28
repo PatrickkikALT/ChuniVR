@@ -1,8 +1,14 @@
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
+using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit.Inputs.Haptics;
 using UnityEngine.XR.Interaction.Toolkit.Inputs.Simulation;
+using UnityEngine.XR.OpenXR;
 
-
+/// <summary>
+/// Detects collisions with just controllers (layer 6) and sends corresponding input to ChuniIO.
+/// Also triggers haptic feedback when appropriate
+/// </summary>
 public class TouchCell : MonoBehaviour {
   public int btn;
   private bool xrDeviceEnabled;
@@ -38,10 +44,13 @@ public class TouchCell : MonoBehaviour {
     if (xrDeviceEnabled) {
       return false;
     }
-    return haptic.SendHapticImpulse(0.6f, 0.1f);
+    
+    var con = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand).name.ToLower();
+    var amplitude = con.Contains("vive") ? 0.4f : 0.6f;
+    
+    return haptic.SendHapticImpulse(amplitude, 0.1f);
   }
   
-  [ContextMenu("Test")]
   public void SendBtn() {
     ChuniIO.Instance.SendButtonToIO(btn);
   }

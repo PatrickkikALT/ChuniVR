@@ -13,7 +13,7 @@ public class EAmusementGenerator : MonoBehaviour
   }
 
   public void GenerateCard() {
-    var c = Instantiate(card, transform.position, transform.rotation);
+    var c = Instantiate(card, cardSpawn.position, transform.rotation);
     c.GetComponent<EAmusementCard>().id = aimeIDInput.text.Length != 20 ? GenerateRandomAimeID() : aimeIDInput.text;
   }
   
