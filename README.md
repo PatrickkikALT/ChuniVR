@@ -3,7 +3,7 @@ A VR emulator for Chunithm.
 
 ## Usage
 - Get clean Chunithm data (I will NEVER provide any data whatsoever) and set it up with segatools <br>
-- Download the io dlls from releases and put them in your game folder <br>
+- Download the io dlls from releases (or [build](https://github.com/PatrickkikALT/ChuniVRIO) them yourself) and put them in your game folder <br>
 - Put them in their respective segatools options
 - Open Chunithm and wait until the console says that Shared Memory has been opened <br>
 - Open the Unity game <br>
