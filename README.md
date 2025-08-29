@@ -9,6 +9,9 @@ A VR emulator for Chunithm.
 - Open the Unity game <br>
 - play game
 
+## Hand tracking
+Hand tracking is possible but quite scuffed, if you want to try it you will have to clone the repo and build the hand tracking scene. You are currently not able to rotate or move in this scene, so you will have to either use OVR advanced settings or room view reset.
+
 ## Known issues
 Sometimes game screen just turns white for no reason
 
