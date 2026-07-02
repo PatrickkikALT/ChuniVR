@@ -2,7 +2,7 @@
 A VR emulator for Chunithm.
 
 ## Usage
-- Get clean Chunithm data (I will NEVER provide any data whatsoever) and set it up with segatools <br>
+- Get clean Chunithm data (I will NEVER provide any data whatsoever) and set it up with segatools (make sure to use dniel97's segatools, fufubot is not supported!) <br>
 - Download the io dlls from releases (or [build](https://github.com/PatrickkikALT/ChuniVRIO) them yourself) and put them in your game folder <br>
 - Put them in their respective segatools options
 - Open Chunithm first <br>
